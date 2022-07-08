@@ -1,8 +1,14 @@
 ---
   - name: "Deploy a web application"
-    hosts: localhost
+    hosts: web_nodes
     become: yes
-    tasks: 
-      - include: ./tasks/python_dep.yaml
-      - include: ./tasks/mysqldb.yaml
-      - include: ./tasks/web_flask.yaml
+    roles:
+      - python
+      - web-app
+# modifed to distrubuted arch
+  - name: "Deploy a db application"
+    hosts: db_nodes
+    become: yes
+    roles:
+      - python
+      - mysqldb
