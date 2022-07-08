@@ -1,10 +1,23 @@
 ---
   - name: "Deploy a web application"
     hosts: web_nodes
+    # stops execution on all the servers, evern one server is failing.
+    any_errors_fatal: true
+    # allows each server to run as fast it can
+    strategy: free
+    # to run on only 2 servers at a time. By default it will run on five servers
+    # serial: 2
+    # first run on 2, then 3 and after that 5 servers 
+    # serial: [2,3,5]
+    # serial: 20% or "20%"
     become: yes
+    # vars: # to fetch var from specific csv file (Hostname,Password) Header
+    #   ansible_ssh_pass: "{{ lookup('csvfile', 'web_server file=credentials.csv delimiter=,') }}"
     roles:
       - python
       - web-app
+      - monitor
+
 # modifed to distrubuted arch
   - name: "Deploy a db application"
     hosts: db_nodes
@@ -12,3 +25,9 @@
     roles:
       - python
       - mysqldb
+
+  - name: "notification"
+    hosts: us_nodes
+    become: yes
+    roles:
+      - notification

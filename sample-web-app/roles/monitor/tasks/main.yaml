@@ -1,0 +1,8 @@
+---
+- name: "monitoring web application for every 5 min"
+  command: /opt/monitor_webapp.py
+  # runs the task in background for 5 min
+  async: 300
+  # When you set poll: 0 , Ansible starts the task and immediately moves on to the next task without waiting for a result.
+  poll: 0
+  register: webapp_result

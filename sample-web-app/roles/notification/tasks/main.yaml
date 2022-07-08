@@ -1,0 +1,8 @@
+---
+ - name: "send mail notification"
+   mail:
+     to: raghuveera098@gmail.com
+     subject: ansible play book is status
+     body: play book is deployed successfully
+     #  if any smpt issue we dont want the playbook to fail, the add ignore_errors: yes
+   ignore_errors: yes
